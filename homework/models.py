@@ -26,7 +26,8 @@ class LinearClassifier(torch.nn.Module):
         """
         Your code here
         """
-        raise NotImplementedError('LinearClassifier.__init__')
+        self.linear = torch.nn.Sequential(torch.nn.Linear(3 * 64 * 64, 100),
+                                          torch.nn.Linear(100, 6))
 
     def forward(self, x):
         """
@@ -35,7 +36,8 @@ class LinearClassifier(torch.nn.Module):
         @x: torch.Tensor((B,3,64,64))
         @return: torch.Tensor((B,6))
         """
-        raise NotImplementedError('LinearClassifier.forward')
+        x_flat = x.view(x.shape[0], -1)
+        return self.linear(x_flat)
 
 
 class MLPClassifier(torch.nn.Module):
