@@ -16,7 +16,9 @@ class ClassificationLoss(torch.nn.Module):
 
         Hint: Don't be too fancy, this is a one-liner
         """
-        raise NotImplementedError('ClassificationLoss.forward')
+        prediction = F.log_softmax(input, dim=-1)
+        loss = F.nll_loss(prediction, target)
+        return loss
 
 
 class LinearClassifier(torch.nn.Module):
