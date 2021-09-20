@@ -1,6 +1,7 @@
 from PIL import Image
 import torch
 import torchvision
+import csv
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
@@ -15,8 +16,16 @@ class SuperTuxDataset(Dataset):
 
         WARNING: Do not perform data normalization here. 
         """
-        self.data = torchvision.datasets.CIFAR10(root=dataset_path, train=True, 
-            download=True, transform=None)
+        self.data = list()
+        with open(dataset_path + "/labels.csv") as csvfile:
+          file_reader = csv.reader(csvfile, delimiter=',')
+          index = 0
+          for row in file_reader:
+            if(index != 0):
+              with Image.open(dataset_path + "/" + row[0]) as img:
+                tensor_img = transforms.Compose([transforms.ToTensor()])
+                self.data.append((tensor_img(img), LABEL_NAMES.index(row[1])))
+            index+=1
 
 
     def __len__(self):
