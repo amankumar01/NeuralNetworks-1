@@ -52,7 +52,8 @@ class MLPClassifier(torch.nn.Module):
         """
         Your code here
         """
-        raise NotImplementedError('MLPClassifier.__init__')
+        self.linear = nn.Sequential(nn.Linear(3 * 64 * 64, 100), nn.ReLU(), 
+          nn.Linear(100, 6))
 
     def forward(self, x):
         """
@@ -61,7 +62,11 @@ class MLPClassifier(torch.nn.Module):
         @x: torch.Tensor((B,3,64,64))
         @return: torch.Tensor((B,6))
         """
-        return self.layers(x.reshape(x.shape[0], -1))
+        x_flat = x.view(x.shape[0], -1)
+        return self.linear(x_flat)
+    
+    def predict(self, image):
+      return torch.nn.Softmax(dim=1)(self(image)).argmax(1)
 
 
 model_factory = {
