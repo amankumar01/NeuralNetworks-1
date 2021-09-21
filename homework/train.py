@@ -9,6 +9,8 @@ def train(args):
     model = model_factory[args.model]()
     lr=0.001
     epochs=10
+    data_train = load_data("data/train")
+    data_val = load_data("data/valid")
     """
     Your code here
 

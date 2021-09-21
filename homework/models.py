@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-
+import torch.nn as nn
 
 class ClassificationLoss(torch.nn.Module):
     def forward(self, input, target):
@@ -40,6 +40,9 @@ class LinearClassifier(torch.nn.Module):
         """
         x_flat = x.view(x.shape[0], -1)
         return self.linear(x_flat)
+    
+    def predict(self, image):
+      return torch.nn.Softmax(dim=1)(self(image)).argmax(1)
 
 
 class MLPClassifier(torch.nn.Module):
@@ -58,7 +61,7 @@ class MLPClassifier(torch.nn.Module):
         @x: torch.Tensor((B,3,64,64))
         @return: torch.Tensor((B,6))
         """
-        raise NotImplementedError('MLPClassifier.forward')
+        return self.layers(x.reshape(x.shape[0], -1))
 
 
 model_factory = {
