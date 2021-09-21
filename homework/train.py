@@ -8,7 +8,7 @@ from tqdm.notebook import tqdm
 def train(args):
     model = model_factory[args.model]()
     lr=0.001
-    epochs=10
+    epochs=15
     data_train = load_data("data/train")
     data_val = load_data("data/valid")
     """

@@ -52,8 +52,8 @@ class MLPClassifier(torch.nn.Module):
         """
         Your code here
         """
-        self.linear = nn.Sequential(nn.Linear(3 * 64 * 64, 100), nn.ReLU(), 
-          nn.Linear(100, 6))
+        self.linear = nn.Sequential(nn.Linear(3 * 64 * 64, 95), nn.ReLU(), 
+          nn.Linear(95, 6))
 
     def forward(self, x):
         """
